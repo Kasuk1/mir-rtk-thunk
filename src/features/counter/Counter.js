@@ -7,15 +7,23 @@ import {
   incrementAsync,
   incrementIfOdd,
   selectCount,
+  selectCharacter,
 } from './counterSlice';
 import styles from './Counter.module.css';
+import { addAsyncAmount, getCharacterById } from './counterActions';
 
 export function Counter() {
   const count = useSelector(selectCount);
+  const { name, image } = useSelector(selectCharacter);
   const dispatch = useDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
 
+  const [incrementAmount, setIncrementAmount] = useState('2');
   const incrementValue = Number(incrementAmount) || 0;
+
+  const handleCharacter = () => {
+    const randomNumber = Math.floor(Math.random() * 800);
+    dispatch(getCharacterById(randomNumber))
+  }
 
   return (
     <div>
@@ -36,6 +44,9 @@ export function Counter() {
           +
         </button>
       </div>
+      <p>{name}</p>
+      <img src={image} alt="" />
+
       <div className={styles.row}>
         <input
           className={styles.textbox}
@@ -51,7 +62,7 @@ export function Counter() {
         </button>
         <button
           className={styles.asyncButton}
-          onClick={() => dispatch(incrementAsync(incrementValue))}
+          onClick={() => dispatch(addAsyncAmount(incrementValue))}
         >
           Add Async
         </button>
@@ -60,6 +71,12 @@ export function Counter() {
           onClick={() => dispatch(incrementIfOdd(incrementValue))}
         >
           Add If Odd
+        </button>
+        <button
+          className={styles.button}
+          onClick={handleCharacter}
+        >
+          Random Rick and Morty's character
         </button>
       </div>
     </div>
