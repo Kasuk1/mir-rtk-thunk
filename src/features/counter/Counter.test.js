@@ -6,6 +6,13 @@ import { Provider } from "react-redux";
 import { store } from "../../app/store";
 
 describe('<Counter /> Tests', () => {
+
+    const initialState = {
+        value: 0,
+        status: 'idle',
+        character: {}
+    }
+
     test('should render the initial value of count = 0', () => {
 
         render(
